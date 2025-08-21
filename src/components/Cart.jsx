@@ -12,7 +12,7 @@ export default function Cart() {
     <section id="cartContainer">
       <article id="cart">
         {items.map((item) => (
-          <article key={item.id} className="cartCard">
+          <article key={item.id} id={`cart-item-${item.id}`} className="cartCard">
             <img src={item.image} alt={item.title} />
             <h3>{item.title}</h3>
             <div className="qtyControls">

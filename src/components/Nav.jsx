@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, removeFromCart } from '../store/slices/cartSlice'
 
@@ -10,6 +10,25 @@ export default function Nav() {
 
   const totalQty = useMemo(() => items.reduce((s, i) => s + i.quantity, 0), [items])
   const subtotal = useMemo(() => items.reduce((s, i) => s + Number(i.price) * i.quantity, 0), [items])
+
+  // listen for requests to open mini cart and focus specific item
+  useEffect(() => {
+    const handler = (e) => {
+      const { type, payload } = e.detail || {}
+      if (type === 'open-mini-cart') {
+        setOpen(true)
+        // wait next tick for drawer render, then try to find item and scroll
+        setTimeout(() => {
+          const el = payload?.id ? document.querySelector(`#mini-cart-item-${payload.id}`) : null
+          const list = document.querySelector('.miniCartItems')
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          else if (list) list.scrollTop = 0
+        }, 0)
+      }
+    }
+    window.addEventListener('cart', handler)
+    return () => window.removeEventListener('cart', handler)
+  }, [])
 
   const scrollToCart = () => {
     setOpen(false)
@@ -55,7 +74,7 @@ export default function Nav() {
             <div className="miniCartItems">
               {items.length === 0 && <p className="empty">Your cart is empty</p>}
               {items.map((item) => (
-                <div key={item.id} className="miniCartItem">
+                <div key={item.id} id={`mini-cart-item-${item.id}`} className="miniCartItem">
                   <img src={item.image} alt={item.title} />
                   <div className="info">
                     <h4 title={item.title}>{item.title}</h4>

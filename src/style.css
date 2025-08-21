@@ -65,7 +65,8 @@ nav > .logo::first-letter { color:orange; text-shadow:0 0 2px black; }
 #cartContainer { width:100%; min-height:30vh; padding:20px; }
 #cartContainer > h1 { padding:50px; }
 #cartContainer > #cart { width:100%; padding:20px; }
-#cartContainer > #cart > .cartCard { border:1px solid gainsboro; border-radius:5px; box-shadow:0 0 5px gainsboro; display:flex; align-items:center; justify-content:space-between; padding:20px; margin:10px 0; gap:12px; }
+#cartContainer > #cart > .cartCard { border:1px solid gainsboro; border-radius:5px; box-shadow:0 0 5px gainsboro; display:flex; align-items:center; justify-content:space-between; padding:20px; margin:10px 0; gap:12px; transition: box-shadow .3s ease, border-color .3s ease, background-color .3s ease; }
+#cartContainer > #cart > .cartCard.highlight { border-color:#0081dc; box-shadow:0 0 0 3px rgba(0,129,220,.2); background-color:#f3f9ff; }
 #cartContainer > #cart > .cartCard > img { height:100px; width:100px; object-fit:contain; flex-shrink:0; }
 #cartContainer > #cart > .cartCard > h3 { flex:1 1 auto; min-width:160px; }
 #cartContainer > #cart > .cartCard > .qtyControls { display:inline-flex; align-items:center; gap:8px; }
